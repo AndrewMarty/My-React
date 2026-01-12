@@ -1,0 +1,33 @@
+.root {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+}
+
+.input {
+    flex-grow: 1;
+}
+
+.button {
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    min-width: 40px;
+    min-height: 30px;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &.completed {
+        background: limegreen;
+    }
+
+    &.unCompleted {
+        background: orange;
+    }
+}

@@ -1,0 +1,28 @@
+{
+	"name": "myreact",
+	"version": "1.0.0",
+	"description": "my implementation of React. Softnetix",
+	"main": "./src/index.ts",
+	"scripts": {
+		"dev": "webpack serve --mode development",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Andrew M.",
+	"license": "ISC",
+	"dependencies": {
+		"prettier": "^3.7.4",
+		"react": "^19.2.3"
+	},
+	"devDependencies": {
+		"css-loader": "^7.1.2",
+		"html-webpack-plugin": "^5.6.5",
+		"mini-css-extract-plugin": "^2.9.4",
+		"style-loader": "^4.0.0",
+		"ts-loader": "^9.5.4",
+		"typescript": "^5.9.3",
+		"typescript-plugin-css-modules": "^5.2.0",
+		"webpack": "^5.104.1",
+		"webpack-cli": "^6.0.1",
+		"webpack-dev-server": "^5.2.2"
+	}
+}

@@ -1,0 +1,14 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    padding: 2px;
+    margin: -1px;
+    min-height: 30px;
+
+    border: 1px dashed transparent;
+
+    &.highlight {
+        border: 1px dashed red;
+    }
+}
