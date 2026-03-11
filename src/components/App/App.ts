@@ -7,7 +7,6 @@ import {
 } from '../../react'
 import classes from './App.module.css'
 import { TodoList, TTodoListMethods } from '../TodoList'
-import { Comments } from '../Comments/Comments'
 
 enum EFilter {
 	Completed = 'Completed',
@@ -105,7 +104,7 @@ export const App = () => {
 	return createElement(
 		'div',
 		{ className: classes.root },
-		createElement('h1', {}, 'Softnetix React'),
+		createElement('h1', {}, 'React'),
 		createElement(
 			'div',
 			{ className: classes.controls },
@@ -133,7 +132,6 @@ export const App = () => {
 			onDelete: handleDeleteClick,
 			onComplete: handleCompleteClick,
 			ref: listRef
-		}),
-		createElement(Comments, {})
+		})
 	)
 }

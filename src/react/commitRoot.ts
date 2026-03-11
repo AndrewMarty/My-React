@@ -3,90 +3,14 @@ import { EFiberAction, TFiber, TFiberNode } from './fiber'
 import { updateNode } from './updateNode'
 import { isFragmentElement, isHTMLElement, isTextElement } from './utils'
 import { FRAGMENT_ELEMENT_TYPE, TEXT_ELEMENT_TYPE } from './createElement'
-import {
-	isUseEffectHook,
-	TEffectCleanup,
-	TUseEffectHook
-} from './hooks/useEffect'
-
-const getUseEffectHooks = (fiber: TFiber): TUseEffectHook[] => {
-	return fiber.hooks?.filter(isUseEffectHook) ?? []
-}
-
-const getUpdateCleanups = (fiber: TFiber): TEffectCleanup[] => {
-	return getUseEffectHooks(fiber)
-		.filter(hook => hook.isDepsChanged)
-		.map(hook => hook.cleanup)
-		.filter(cleanup => !!cleanup)
-}
-
-const getUnmountCleanups = (fiber: TFiber): TEffectCleanup[] => {
-	return (
-		getUseEffectHooks(fiber)
-			.map(hook => hook.cleanup)
-			.filter(cleanup => !!cleanup) ?? []
-	)
-}
-
-const scheduleCleanups = (cleanups: TEffectCleanup[]) => {
-	setTimeout(() => {
-		cleanups.forEach(cleanup => cleanup())
-	}, 0)
-}
-
-const scheduleEffects = (fiber: TFiber) => {
-	setTimeout(() => {
-		const useEffects = fiber.hooks
-			?.filter(isUseEffectHook)
-			?.filter(hook => hook.isDepsChanged)
-
-		useEffects?.forEach(useEffect => {
-			const cleanup = useEffect.callback()
-
-			if (!cleanup) return
-
-			useEffect.cleanup = cleanup
-		})
-	}, 0)
-}
-
-const applyCleanups = (fiber: TFiber) => {
-	const cleanups = getUpdateCleanups(fiber)
-
-	if (cleanups) {
-		scheduleCleanups(cleanups)
-	}
-
-	if (fiber.child) {
-		applyCleanups(fiber.child)
-	}
-
-	if (fiber.sibling) {
-		applyCleanups(fiber.sibling)
-	}
-}
-
-const applyEffects = (fiber: TFiber) => {
-	if (fiber.child) {
-		applyEffects(fiber.child)
-	}
-
-	scheduleEffects(fiber)
-
-	if (fiber.sibling) {
-		applyEffects(fiber.sibling)
-	}
-}
 
 export const commitRoot = () => {
 	const childFiber = React.workingRoot?.child
-	if (childFiber) applyCleanups(childFiber)
 
 	React.fibersToRemove?.forEach(commitRemove)
 
 	if (childFiber) {
 		commitWork(childFiber)
-		applyEffects(childFiber)
 	}
 
 	React.currentRoot = React.workingRoot
@@ -170,6 +94,4 @@ const commitRemove = (fiber: TFiber) => {
 	} else if (fiber.child) {
 		commitRemove(fiber.child)
 	}
-
-	scheduleCleanups(getUnmountCleanups(fiber))
 }

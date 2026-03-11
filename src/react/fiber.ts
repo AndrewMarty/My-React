@@ -8,7 +8,6 @@ import { Nullable } from './types'
 import { TUseMemoHook } from './hooks/useMemo'
 import { TUseRefHook } from './hooks/useRef'
 import { TUseCallback } from './hooks/useCallback'
-import { TUseEffectHook } from './hooks/useEffect'
 import React from './react'
 import { TUseIdHook } from './hooks/useId'
 import { TUseImperativeHandleHook } from './hooks/useImperativeHandle'
@@ -24,7 +23,6 @@ export type TFiberHook =
 	| TUseMemoHook<any>
 	| TUseCallback<any>
 	| TUseRefHook<any>
-	| TUseEffectHook
 	| TUseIdHook
 	| TUseImperativeHandleHook
 
